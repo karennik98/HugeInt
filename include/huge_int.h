@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exception.h"
+#include "utility.h"
 
 #include <vector>
 #include <string>
@@ -45,16 +46,8 @@ public:
     {
         return m_sign;
     }
-    std::string get_number()//for debug
-    {
-        if (m_sign == true && m_digits[0] != '-')
-            return '-' + m_digits;
-        return m_digits;
-    }
 private:
-    std::pair<std::string, std::string> get_larger_and_smaller(std::string first, std::string second) const;
     HugeInt inverse();
-    bool is_valid_number_format()const;
     bool is_negative()const
     {
         return (m_sign == true);

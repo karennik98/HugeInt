@@ -53,6 +53,7 @@ int main()
     }
     catch(Exception& ob)
     {
+        std::string str(ob.what());
         std::cout<<ob.what()<<std::endl;
     }
 

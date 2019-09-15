@@ -43,7 +43,7 @@ public:
 	}
 	const char* what() const throw() override
 	{
-		return ("info: " + m_info + "\nfile: " + m_file = "\nfunction: " + m_func + "\nline: " + std::to_string(m_line)).c_str();
+		return ("info: " + m_info + " file: " + m_file = " function: " + m_func + " line: " + std::to_string(m_line)).c_str();
 	}
 };
 
