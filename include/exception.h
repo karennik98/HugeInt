@@ -9,18 +9,18 @@ class Exception : public std::exception
 public:
 	const char* what() const throw() = 0;
 	Exception(std::string info, std::string file, std::string func, unsigned line) 
-        : m_file(file)
+        : m_info(info)
+		, m_file(file)
         , m_func(func)
         , m_line(line)
-        , m_info(info)
 	{
 
 	}
 protected:
+	std::string m_info;
 	std::string m_file;
-	unsigned m_line;
 	std::string m_func;
-    std::string m_info;
+	unsigned m_line;
 };
 
 class DivideByZero : public Exception 
