@@ -1,12 +1,37 @@
 #include "../include/utility.h"
 
 std::pair<std::string, std::string> utility::get_larger_and_smaller(std::string first, std::string second)
+{
+    std::string larger, smaller;
+    if(first.length() == second.length())
     {
-        std::string larger = first.length() > second.length() ? first : second;
-        std::string smaller = first != larger ? first : second;
-        return std::make_pair(larger, smaller); 
+        if(first == second)
+        {
+            return std::make_pair(first,second);
+        }
+        for(int i=0;i<first.length();++i)
+        {
+            if(first[i]>second[i])
+            {
+                larger = first;
+                smaller = second;
+                break;
+            }
+            else if(first[i]<second[i])
+            {
+                larger = second;
+                smaller = first;
+                break;
+            }
+        }
     }
-
+    else
+    {
+        larger = first.length() > second.length() ? first : second;
+        smaller = first != larger ? first : second;
+    }
+    return std::make_pair(larger, smaller); 
+}
 
 bool utility::is_valid_number_format(std::string number)
 {

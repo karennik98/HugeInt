@@ -28,7 +28,8 @@ public:
 
     HugeInt operator-() const;
 
-    HugeInt operator++();
+    HugeInt& operator++();
+    const HugeInt operator++(int);
 
     bool operator >(const HugeInt& other)const;
     bool operator ==(const HugeInt& other)const;

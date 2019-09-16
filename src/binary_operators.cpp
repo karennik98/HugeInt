@@ -1,4 +1,6 @@
 #include "../include/huge_int.h"
+#include <climits>
+#include <iostream>
 
 HugeInt HugeInt::operator +(const HugeInt& rhs)
 {
@@ -171,6 +173,7 @@ HugeInt HugeInt::operator /(const HugeInt& rhs)
     {
         throw DivideByZero("divide by zero", "huge_int.cpp", "operator /(const HugeInt& rhs)",150);
     }
+
     if(m_digits == "0")
     {
         return HugeInt("0");
@@ -191,14 +194,15 @@ HugeInt HugeInt::operator /(const HugeInt& rhs)
     HugeInt quotient("0");
     while(copy_this >= copy_rhs)
     {
-        copy_this -=  copy_rhs;
-        ++quotient;
+        copy_this -= copy_rhs;
+        quotient++;
+        //std::cout<<"quotient: "<<quotient<<std::endl; // for debug (divide work slow when we divode veri large number on small number)
     }
 
     if(quotient.m_digits != "0")
     {
         quotient.set_sign(sign);
     }
-    
+
     return quotient;
 }
