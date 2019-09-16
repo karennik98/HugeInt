@@ -14,16 +14,20 @@ HugeInt HugeInt::operator +(const HugeInt& rhs)
         number.m_sign = false;
         return -(number - rhs);
     }
+
     bool sign = false;
     if (m_sign == true && rhs.m_sign == true)
     {
         sign = true;
     }
+
     std::string larger, smaller;
     std::tie(larger,smaller) = utility::get_larger_and_smaller(this->m_digits, rhs.m_digits);
+
+	int diff = larger.size()-smaller.size();
+	smaller.insert(0,diff,'0');
+
     std::string sum = larger;
-	int diffInLenghts = larger.size()-smaller.size();
-	smaller.insert(0,diffInLenghts,'0');
 	for (int i = smaller.size() - 1; i >= 0; --i)
 	{
 		sum[i] = ((smaller[i] - '0') + (larger[i] - '0') + '0');
@@ -36,11 +40,13 @@ HugeInt HugeInt::operator +(const HugeInt& rhs)
 			}
 		}
 	}
+
 	if (sum[0] > '9')
 	{
 		sum[0] -= 10;
 		sum.insert(0, 1, '1');
 	}
+
     HugeInt result(sum);
     result.set_sign(sign);
     return result;
@@ -60,15 +66,20 @@ HugeInt HugeInt::operator -(const HugeInt& rhs)
         number.m_sign = false;
         return -(number + rhs);
     }
-    bool sign = false;
+
     std::string larger, smaller;
     std::tie(larger, smaller) = utility::get_larger_and_smaller(this->m_digits, rhs.m_digits);
+
+    bool sign = false;
     if(m_sign == false && rhs.m_sign == false && larger == rhs.m_digits || m_sign == true && rhs.m_sign == true && larger == m_digits)
+    {
         sign = true;
-    //std::string quotient = larger;
-    HugeInt result(larger);
+    }
+
     size_t diff = larger.size()-smaller.size();
     smaller.insert(0,diff,'0');
+
+    HugeInt result(larger);
     for(int i = larger.size()-1; i>=0; --i)
     {
         if(larger[i] < smaller[i])
@@ -78,10 +89,12 @@ HugeInt HugeInt::operator -(const HugeInt& rhs)
         }
         result.m_digits[i] = ((larger[i] - '0') - (smaller[i] - '0') + '0');
     }
+
     while(result.m_digits[0] == '0' && result.m_digits.length() != 1)
     {
         result.m_digits.erase(0,1);
     }
+
     result.set_sign(sign);
     return result;
 }
@@ -93,6 +106,7 @@ HugeInt HugeInt::operator *(const HugeInt& rhs)
     {
         sign = false;
     }
+
     size_t len1 = m_digits.size(); 
     size_t len2 = rhs.m_digits.size(); 
     if (len1 == 0 || len2 == 0) 
@@ -146,6 +160,7 @@ HugeInt HugeInt::operator *(const HugeInt& rhs)
     {
         result.m_digits += std::to_string(result_vec[i--]); 
     }
+
     result.set_sign(sign);
     return result;
 }
@@ -172,13 +187,18 @@ HugeInt HugeInt::operator /(const HugeInt& rhs)
 
     copy_rhs.set_sign(false);
     copy_this.set_sign(false);
+
     HugeInt quotient("0");
     while(copy_this >= copy_rhs)
     {
         copy_this -=  copy_rhs;
         ++quotient;
     }
+
     if(quotient.m_digits != "0")
+    {
         quotient.set_sign(sign);
+    }
+    
     return quotient;
 }
